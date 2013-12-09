@@ -225,11 +225,11 @@ class NodeConn(Greenlet):
 		elif message.command == "inv":
 
 			# special message sent to kick getblocks
-			if (len(message.inv) == 1 and
-			    message.inv[0].type == MSG_BLOCK and
-			    self.headerdb.haveblock(message.inv[0].hash, True)):
-				self.send_getheaders(False, False)
-				return
+                        for inv in message.inv:
+                                if (inv.type == MSG_BLOCK and 
+                                    not self.headerdb.haveblock(message.inv[0].hash, True)):
+                                        self.send_getheaders(False, False)
+                                        return
 
 		elif message.command == "tx":
                         pass
