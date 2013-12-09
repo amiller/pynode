@@ -226,7 +226,7 @@ class NodeConn(Greenlet):
 			# special message sent to kick getblocks
 			if (len(message.inv) == 1 and
 			    message.inv[0].type == MSG_BLOCK and
-			    self.chaindb.haveblock(message.inv[0].hash, True)):
+			    not self.chaindb.haveblock(message.inv[0].hash, True)):
 				self.send_getblocks(False)
 				return
 
